@@ -13,5 +13,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
 app.listen(port, () => {
+  // URL表示
   console.log(`Server is running at http://localhost:${port}`);
 });
