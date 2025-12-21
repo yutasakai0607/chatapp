@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { createWelcomeEmailTemplate } from "./emailTemplates.js";
 import "dotenv/config"
 
 const transporter = nodemailer.createTransport({
@@ -9,12 +10,12 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-export const sendMail = async ({to, toName}) => {
+export const sendMail = async ({email, name, clientURL}) => {
   const mailOptions = {
       from: process.env.EMAIL_FROM,
-      to: process.env.EMAIL_FROM,          // 実際に届くか確認したい宛先
+      to: email,          // 実際に届くか確認したい宛先
       subject: "テストメール",
-      text: "Node.jsから送信しています！"
+      text: createWelcomeEmailTemplate(name, clientURL)
   };
 
   return transporter.sendMail(mailOptions, (error, info) => {
