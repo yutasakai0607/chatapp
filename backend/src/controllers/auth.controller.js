@@ -2,7 +2,7 @@ import { sendWelcomeEmail } from "../emails/emailHandlers.js";
 import { generateToken } from "../lib/utils.js";
 import { ENV } from "../lib/env.js";
 import User from "../models/User.js";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 
 export const signup = async (req, res) => {
     const {fullName, email, password} = req.body
@@ -12,7 +12,7 @@ export const signup = async (req, res) => {
             return res.status(400).json({message: "All fields are required"});
         }
 
-        if (password.lengh < 6) {
+        if (password.length < 6) {
             return res.status(400).json({message: "password must be at least 6 characters"})
         }
 
@@ -68,7 +68,7 @@ export const login = async (req, res) => {
             return res.status(400).json({message: "Invalid "});
         }
 
-        const isPasswordCorrect = await bcrypt.compare(user.password, password);
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
         if (!isPasswordCorrect) {
             return res.status(400).json({message: "Invalid password"});
         }
@@ -87,8 +87,8 @@ export const login = async (req, res) => {
     }
 };
 
-export const logout = async (_, res) => {
-    res.cookies("wjt", "", {maxAge:0});
+export const logout = (_, res) => {
+    res.cookie("jwt", "", {maxAge:0});
     res.status(200).json({message: "Logged out successfully"});
 };
 
