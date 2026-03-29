@@ -4,7 +4,7 @@ import { ENV } from "./env.js";
 
 const aj = arcjet({
   key: ENV.ARCJET_KEY,
-  environment: "development",
+  environment: ENV.ARCJET_ENV,
   rules: [
     // Shield protects your app from common attacks e.g. SQL injection
     shield({ mode: "LIVE" }),
